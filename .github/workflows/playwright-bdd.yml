@@ -18,11 +18,11 @@ jobs:
       BROWSER: chromium
       HEADLESS: true
       RECORD_VIDEO: true
-      ORANGEHRM_USERNAME: Admin
-      ORANGEHRM_PASSWORD: admin123
-      ORANGEHRM_BASE_URL: https://opensource-demo.orangehrmlive.com/web/index.php
-      BSTACK_BASE_URL: https://bstackdemo.com
-      BSTACK_PASSWORD: testingisfun99
+      ORANGEHRM_USERNAME: ${{ secrets.ORANGEHRM_USERNAME }}
+      ORANGEHRM_PASSWORD: ${{ secrets.ORANGEHRM_PASSWORD }}
+      ORANGEHRM_BASE_URL: ${{ vars.ORANGEHRM_BASE_URL }}
+      BSTACK_BASE_URL: ${{ vars.BSTACK_BASE_URL }}
+      BSTACK_PASSWORD: ${{ secrets.BSTACK_PASSWORD }}
       DEFAULT_TIMEOUT_MS: 90000
 
     steps:
@@ -51,4 +51,5 @@ jobs:
           name: playwright-bdd-reports
           path: reports/
           if-no-files-found: warn
+
 
