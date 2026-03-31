@@ -6,10 +6,10 @@ class EcommercePage {
     this.page = page;
     this.testData = testData;
     this.locators = {
-      usernameDropdown: "#username",
-      usernameOptions: ".css-yt9ioa-option",
-      passwordDropdown: "#password",
-      passwordInput: "#react-select-3-input",
+      usernameDropdownToggle: "#username svg",
+      usernameOption: "#react-select-2-option-0-0",
+      passwordDropdownToggle: "#password svg",
+      passwordOption: "#react-select-3-option-0-0",
       loginButton: "button#login-btn",
       addToCartButtons: "text=Add to cart",
       checkoutButton: "text=Checkout",
@@ -30,14 +30,17 @@ class EcommercePage {
   }
 
   async login() {
-    await this.page.click(this.locators.usernameDropdown);
-    const firstUserOption = this.page.locator(this.locators.usernameOptions).first();
-    await expect(firstUserOption).toBeVisible();
-    await firstUserOption.click();
+    await this.page.click(this.locators.usernameDropdownToggle);
+    const usernameOption = this.page.locator(this.locators.usernameOption);
+    await expect(usernameOption).toBeVisible();
+    await usernameOption.click();
 
-    await this.page.click(this.locators.passwordDropdown);
-    await this.page.fill(this.locators.passwordInput, config.apps.bstackDemo.password);
-    await this.page.keyboard.press("Enter");
+    await this.page.click(this.locators.passwordDropdownToggle);
+    const passwordOption = this.page
+      .locator(this.locators.passwordOption)
+      .filter({ hasText: config.apps.bstackDemo.password });
+    await expect(passwordOption).toBeVisible();
+    await passwordOption.click();
 
     await this.page.click(this.locators.loginButton);
     await this.page.waitForLoadState("networkidle");
